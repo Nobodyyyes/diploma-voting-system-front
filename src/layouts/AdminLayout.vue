@@ -1,30 +1,27 @@
 <script setup lang="ts">
-import {computed} from "vue";
-import {useAuthStore} from "@/stores/auth.store";
+import {useAuthStore} from "../stores/auth.store";
 
 const auth = useAuthStore();
-const username = computed(() => auth.user?.username ?? "Пользователь");
 </script>
 
 <template>
   <div class="wrap">
     <header class="topbar">
-      <div class="brand">eVote</div>
+      <div class="brand">eVote Admin</div>
       <div class="right">
-        <span class="muted">{{ username }}</span>
         <button class="btn" @click="auth.logout()">Выйти</button>
       </div>
     </header>
 
     <div class="body">
       <nav class="sidebar">
-        <RouterLink to="/app/elections">Голосование</RouterLink>
+        <RouterLink to="/admin">Dashboard</RouterLink>
+        <RouterLink to="/admin/elections">Голосования</RouterLink>
+        <RouterLink to="/admin/audit">Аудит</RouterLink>
       </nav>
 
       <main class="content">
-        <div class="page">
-          <router-view/>
-        </div>
+        <slot/>
       </main>
     </div>
   </div>
@@ -49,19 +46,9 @@ const username = computed(() => auth.user?.username ?? "Пользователь
   font-weight: 700;
 }
 
-.right {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.muted {
-  opacity: 0.75;
-}
-
 .body {
   display: grid;
-  grid-template-columns: 220px 1fr;
+  grid-template-columns: 240px 1fr;
   min-height: calc(100vh - 50px);
 }
 
@@ -73,8 +60,8 @@ const username = computed(() => auth.user?.username ?? "Пользователь
   gap: 8px;
 }
 
-.page {
-  width: 100%;
+.content {
+  padding: 16px;
 }
 
 .btn {
