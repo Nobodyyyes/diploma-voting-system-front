@@ -21,6 +21,7 @@ import AdminElectionEditPage from "../pages/admin/AdminElectionEditPage.vue";
 import AdminCandidatesPage from "../pages/admin/AdminCandidatesPage.vue";
 import AdminVotersPage from "../pages/admin/AdminVotersPage.vue";
 import AdminAuditPage from "../pages/admin/AdminAuditPage.vue";
+import RegisterPage from "../pages/RegisterPage.vue";
 
 type Role = "VOTER" | "ADMIN";
 
@@ -29,6 +30,12 @@ const routes: RouteRecordRaw[] = [
         path: "/login",
         component: AuthLayout,
         children: [{path: "", component: LoginPage}],
+        meta: {public: true},
+    },
+    {
+        path: "/register",
+        component: AuthLayout,
+        children: [{path: "", component: RegisterPage}],
         meta: {public: true},
     },
     {path: "/forbidden", component: ForbiddenPage, meta: {public: true}},
@@ -74,12 +81,10 @@ router.beforeEach(async (to) => {
 
     if (to.meta.public) return true;
 
-    // Если нет логина — отправляем на /login
     if (to.meta.auth && !auth.isAuthenticated) {
         return {path: "/login", query: {next: to.fullPath}};
     }
 
-    // Проверка ролей
     const allowedRoles = (to.meta.roles as Role[] | undefined) ?? undefined;
     if (allowedRoles && auth.user) {
         const has = auth.user.roles.some((r) => allowedRoles.includes(r as Role));

@@ -1,0 +1,17 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    background: linear-gradient(
+            135deg,
+            #052167 0%,
+            #2563eb 50%,
+            #848d99 100%
+    ) fixed;
+}
+
+#app {
+    min-height: 100%;
+}

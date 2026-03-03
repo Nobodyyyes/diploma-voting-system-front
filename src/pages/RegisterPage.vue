@@ -1,38 +1,29 @@
 <script setup lang="ts">
 import {ref} from "vue";
-import {useRoute, useRouter} from "vue-router";
-import {useAuthStore} from "@/stores/auth.store";
+import {useRouter} from "vue-router";
 
 const router = useRouter();
-const route = useRoute();
-const auth = useAuthStore();
 
 const username = ref("");
 const password = ref("");
-const asAdmin = ref(false);
 const error = ref<string | null>(null);
 
 function submit() {
   error.value = null;
 
   if (!username.value.trim() || !password.value.trim()) {
-    error.value = "Введите логин и пароль";
+    error.value = "Заполните логин и пароль";
     return;
   }
-
-  auth.login(username.value.trim(), password.value)
-
-  const next = (route.query.next as string | undefined) ?? (asAdmin.value ? "/admin" : "/app/elections");
-  router.replace(next);
 }
 </script>
 
 <template>
   <div class="login-wrapper">
     <div class="login-card">
-      <h2>Вход в систему</h2>
+      <h2>Регистрация</h2>
 
-      <p v-if="error" class="error">{{ error }}</p>
+      <p v-if="error" class="error"> {{ error }}</p>
 
       <form class="form" @submit.prevent="submit">
         <label>
@@ -42,19 +33,14 @@ function submit() {
 
         <label>
           Пароль
-          <input v-model="password" type="password" autocomplete="current-password"/>
+          <input v-model="password" type="password"/>
         </label>
 
-        <label class="row">
-          <input v-model="asAdmin" type="checkbox"/>
-          Войти как админ (демо)
-        </label>
-
-        <button class="btn" type="submit">Войти</button>
+        <button class="create-btn" type="submit">Создать аккаунт</button>
 
         <div class="register-link">
-          Нет учетной записи?
-          <RouterLink to="/register">Зарегистрироваться</RouterLink>
+          Уже есть аккаунт?
+          <RouterLink to="/login">Войти</RouterLink>
         </div>
       </form>
     </div>
@@ -73,10 +59,8 @@ function submit() {
   max-width: 420px;
   padding: 32px;
   border-radius: 30px;
-
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
-
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
@@ -112,20 +96,19 @@ input:focus {
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
 }
 
-.btn {
+.create-btn {
   margin-top: 10px;
   padding: 12px;
   border: none;
   border-radius: 12px;
   cursor: pointer;
   font-weight: 600;
-
   background: #2563eb;
   color: white;
   transition: 0.2s;
 }
 
-.btn:hover {
+.create-btn:hover {
   background: #1d4ed8;
 }
 
@@ -134,24 +117,18 @@ input:focus {
   text-align: center;
 }
 
-.row {
-  flex-direction: row;
-  align-items: center;
-  gap: 8px;
-}
-
 .register-link {
-  margin-top: 10px;
+  margin-top: 18px;
   text-align: center;
   font-size: 14px;
-  color: #555;
+  color: rgba(0, 0, 0, 0.65);
 }
 
 .register-link a {
+  margin-left: 6px;
   color: #2563eb;
   font-weight: 600;
   text-decoration: none;
-  margin-left: 4px;
 }
 
 .register-link a:hover {
