@@ -48,7 +48,7 @@ function submit() {
 </script>
 
 <template>
-  <div>
+  <div class="vote-page">
     <h2>Голосование #{{ id }}</h2>
     <p class="muted">Выберите вариант и отправьте голос.</p>
 

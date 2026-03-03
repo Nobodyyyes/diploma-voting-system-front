@@ -1,8 +1,12 @@
+<script setup lang="ts">
+import "@/assets/styles/auth-layout.css"
+</script>
+
 <template>
   <div class="wrap">
     <header class="header">
       <h1>eVote</h1>
-      <h2>Электронное голосование</h2>
+      <h2>Система электронного голосования</h2>
     </header>
 
     <main class="content">
@@ -10,27 +14,3 @@
     </main>
   </div>
 </template>
-
-<style scoped>
-.wrap {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-}
-
-.header {
-  text-align: center;
-  margin-bottom: 1px;
-  color: white;
-}
-
-.content {
-  width: 100%;
-  max-width: 420px;
-  border-radius: 12px;
-  padding: 16px;
-}
-</style>

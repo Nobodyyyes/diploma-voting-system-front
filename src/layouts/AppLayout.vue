@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {computed} from "vue";
 import {useAuthStore} from "@/stores/auth.store";
+import "@/assets/styles/app-layout.css"
 
 const auth = useAuthStore();
 const username = computed(() => auth.user?.username ?? "Пользователь");
@@ -9,7 +10,8 @@ const username = computed(() => auth.user?.username ?? "Пользователь
 <template>
   <div class="wrap">
     <header class="topbar">
-      <div class="brand">eVote</div>
+      <h2>eVote</h2>
+      <h2>Система электронного голосования</h2>
       <div class="right">
         <span class="muted">{{ username }}</span>
         <button class="btn" @click="auth.logout()">Выйти</button>
@@ -19,6 +21,7 @@ const username = computed(() => auth.user?.username ?? "Пользователь
     <div class="body">
       <nav class="sidebar">
         <RouterLink to="/app/elections">Голосование</RouterLink>
+        <RouterLink to="/app/settings">Настройки</RouterLink>
       </nav>
 
       <main class="content">
@@ -29,63 +32,3 @@ const username = computed(() => auth.user?.username ?? "Пользователь
     </div>
   </div>
 </template>
-
-<style scoped>
-.wrap {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 16px;
-  border-bottom: 1px solid #ddd;
-}
-
-.brand {
-  font-weight: 700;
-}
-
-.right {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.muted {
-  opacity: 0.75;
-}
-
-.body {
-  display: grid;
-  grid-template-columns: 220px 1fr;
-  min-height: calc(100vh - 50px);
-}
-
-.sidebar {
-  border-right: 1px solid #ddd;
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.page {
-  width: 100%;
-}
-
-.btn {
-  padding: 6px 10px;
-  border: 1px solid #ccc;
-  background: white;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-a.router-link-active {
-  font-weight: 700;
-}
-</style>
